@@ -4,6 +4,3 @@
 - [barpadding](https://dwm.suckless.org/patches/barpadding/) - adds variables for verticle and horizontal space between the statusbar and the edge of the screen
 - [vanitygaps](https://dwm.suckless.org/patches/vanitygaps/) - adds (inner) gaps between client windows and (outer) gaps between windows and the screen edge
 - [notitle](https://dwm.suckless.org/patches/notitle/) - removes title
-## Fonts Required
-- [nerd fonts](https://www.nerdfonts.com/)
-- font awesome 6 pro

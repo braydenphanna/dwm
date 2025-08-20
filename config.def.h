@@ -14,15 +14,15 @@ static const int vertpad            = 10;       /* vertical padding of bar */
 static const int sidepad            = 10;       /* horizontal padding of bar */
 static const char *fonts[]          = { "monospace:size=20:antialias=true","Symbols Nerd Font:size=20:antialias=true", "Font Awesome 6 Pro:size=20:antialias=true" };
 static const char dmenufont[]       = "monospace:size=20";
-static const char col_gray1[]       = "#222222";
+static const char col_gray1[]       = "#212121";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
 static const char col_white[]       = "#FCFCFC";
-static const char col_black[]        = "#121212";
+static const char col_black[]        = "#0D0D0D";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_white, col_black, col_gray2 },
-	[SchemeSel]  = { col_white, col_gray1,  col_black  },
+	[SchemeSel]  = { col_white, col_black,  col_black  },
 };
 
 /* tagging */
@@ -48,9 +48,9 @@ static const int refreshrate = 120;  /* refresh rate (per second) for client mov
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
-	{ "[M]",      monocle },
+	{ "",      tile },    /* first entry is default */
+	{ "",      NULL },    /* no layout function means floating behavior */
+	{ "",      monocle },
 };
 
 /* key definitions */
@@ -66,7 +66,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_black, "-sf", col_white, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb",col_black,"-nf",col_white,"-sb",col_gray1,"-sf",col_white, NULL};
 static const char *termcmd[]  = { "st", NULL };
 
 static const Key keys[] = {

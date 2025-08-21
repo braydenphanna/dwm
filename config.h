@@ -69,11 +69,6 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb",col_black,"-nf",col_white,"-sb",col_gray1,"-sf",col_white, NULL};
 static const char *termcmd[]  = { "st", NULL };
 
-static const char *decreaseVolume[] = {"amixer", "set", "Master", "1%-"};
-static const char *increaseVolume[] = {"amixer", "set", "Master", "1%+"};
-static const char *increaseBrightness[] = {"light", "-A", "10"};
-static const char *decreaseBrightness[] = {"light", "-U", "10"};
-
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
@@ -115,10 +110,11 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ 0,				XK_F2,     spawn,	   {.v = decreaseVolume} },
-	{ 0,				XK_F3,	   spawn,	   {.v = increaseVolume} },
-	{ 0,				XK_F5,	   spawn,	   {.v = decreaseBrightness} },
-	{ 0,				XK_F6,	   spawn,          {.v = increaseBrightness} },
+	{ 0,				XK_F1,     spawn,	   SHCMD("source ~/dwm/scripts/fkeys.sh; mute") },
+	{ 0,				XK_F2,     spawn,	   SHCMD("source ~/dwm/scripts/fkeys.sh; decreaseVolume") },
+	{ 0,				XK_F3,	   spawn,	   SHCMD("source ~/dwm/scripts/fkeys.sh; increaseVolume") },
+	{ 0,				XK_F5,	   spawn,	   SHCMD("source ~/dwm/scripts/fkeys.sh; decreaseBrightness") },
+	{ 0,				XK_F6,	   spawn,          SHCMD("source ~/dwm/scripts/fkeys.sh; increaseBrightness") },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)

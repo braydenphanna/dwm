@@ -6,30 +6,53 @@ orange=#F7A639
 wifi(){
 	case "$(cat /sys/class/net/wlan0/operstate 2>/dev/null)" in
 	up) printf " connected" ;;
-	down) printf " disconnected" ;;
+	down) printf " not connected" ;;
 	esac
 }
 
 volume(){
-	printf " $(awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master) |tr -d '%')"
+	muted="$(awk '/Left:/ {print $6}' <(amixer sget Master) | tr -d '[]')"
+	vol="$(awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master) |tr -d '%')"
+	if [ $muted == "on" ]; then
+		if [ $vol -gt 66 ]; then
+			printf " $vol"
+		else 
+			if [ $vol -gt 32 ]; then
+				printf " $vol"
+			else 
+				printf " $vol"
+			fi
+		fi
+	else
+		printf " $vol"		
+	fi	
 }
 
 brightness(){
-	printf "󰃞 %.0f" "$(light)"
+	bright=$(light)  
+    	if (( $(echo "$bright > 49" | bc) )); then
+        	printf " %.0f\n" "$bright"  
+	else
+        	printf " %.0f\n" "$bright" 
+	fi
 }
 
 battery(){
 	printf "^c$white^ "
 	for num in 0 1; do
 		capacity="$(cat /sys/class/power_supply/BAT$num/capacity) "
-		charging="$(cat /sys/class/power_supply/AC/subsystem/BAT$num/power_now)"
-		if [ $charging -eq 1 ]; then
+		charging="$(cat /sys/class/power_supply/AC/subsystem/BAT$num/status)"
+		if [ $charging == "Charging" ]; then
 			printf "^c$orange^$capacity"
 		else
-			if [ $capacity -lt 21 ]; then
-				printf "^c$red^$capacity"
+			if [ $charging == "Discharging" ]; then
+				if [ $capacity -gt 20 ]; then
+					printf "^c$green^$capacity"
+				else
+					printf "^$red^$capacity"
+				fi
 			else
-				printf "^c$green^$capacity"
+				printf "$capacity"
 			fi
 		fi
 	done

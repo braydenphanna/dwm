@@ -4,7 +4,6 @@ function mute(){
 	amixer set Master 1+ toggle
 
 	muted="$(awk '/Left:/ {print $6}' <(amixer sget Master) | tr -d '[]')"
-	printf "$muted"
 	if [ $muted == "on" ]; then
 		light -s sysfs/leds/platform::mute -S 0
 	else	
@@ -13,12 +12,22 @@ function mute(){
 }
 
 function decreaseVolume(){
+	muted="$(awk '/Left:/ {print $6}' <(amixer sget Master) | tr -d '[]')"
+	if [ $muted == "off" ]; then
+		mute
+	fi
+
 	~/dwm/scripts/bar.sh
 
 	amixer set Master 1%-
 }
 
 function increaseVolume(){
+	muted="$(awk '/Left:/ {print $6}' <(amixer sget Master) | tr -d '[]')"
+	if [ $muted == "off" ]; then
+		mute
+	fi
+
 	~/dwm/scripts/bar.sh
 
 	amixer set Master 1%+

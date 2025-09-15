@@ -49,7 +49,7 @@ battery(){
 				if [ $capacity -gt 20 ]; then
 					printf "^c$green^$capacity"
 				else
-					printf "^$red^$capacity"
+					printf "^c$red^$capacity"
 				fi
 			else
 				printf "$capacity"
